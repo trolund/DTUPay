@@ -1,8 +1,6 @@
 package repositories;
 
-import dao.Account;
-import dao.Transaction;
-import dao.User;
+import dao.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +31,9 @@ public class Data {
     private void setData() {
         users = new ArrayList<>();
 
-        User u1 = new User("061094xxxx", "Troels", "Lund");
-        User u2 = new User("061095xxxx", "Emil", "Lund");
-        User u3 = new User("061096xxxx", "Lars", "Karlson");
+        User u1 = new Customer(0,"061094xxxx", "Troels", "Lund");
+        User u2 = new Customer(1,"061095xxxx", "Emil", "Lund");
+        User u3 = new Merchant(2,"0610980xxxx", "Erik", "Lund");
 
         users.add(u1);
         users.add(u2);

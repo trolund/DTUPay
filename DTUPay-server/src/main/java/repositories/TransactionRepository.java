@@ -6,6 +6,8 @@ import dao.User;
 import repositories.Interfaces.BasicRepository;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class TransactionRepository implements BasicRepository<Transaction, Integer> {
 
@@ -16,6 +18,11 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
                 .filter(t -> t.getId() == id)
                 .findAny()
                 .orElse(null);
+    }
+
+    public List<Transaction> getAll() {
+        Data d = Data.getInstance();
+        return d.transactions;
     }
 
     public void add(Transaction a){
@@ -42,8 +49,14 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
 
     private int nextId(){
         Data d = Data.getInstance();
-        int nextID = d.transactions.stream().max(Comparator.comparingInt(Transaction::getId)).get().getId() + 1;
-        return nextID;
+        Transaction t = d.transactions.stream()
+                .max( Comparator.comparing( Transaction::getId ) ).orElse(null);
+
+        if(t == null) {
+            return 0;
+        }
+
+        return t.getId() + 1;
     }
 
 }

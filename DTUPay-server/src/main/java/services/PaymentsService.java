@@ -8,6 +8,7 @@ import repositories.UserRepository;
 
 import javax.ws.rs.QueryParam;
 import java.util.Date;
+import java.util.List;
 
 public class PaymentsService {
 
@@ -19,8 +20,8 @@ public class PaymentsService {
         Account m = aRepo.get(mid);
         Account c = aRepo.get(cid);
 
-        User merchant = uRepo.get(m.getUserId());
-        User customer = uRepo.get(c.getUserId());
+        User merchant = uRepo.get(mid);
+        User customer = uRepo.get(cid);
 
         if(merchant instanceof Merchant && customer instanceof Customer){
             c.setBalance(c.getBalance() - amount);
@@ -34,7 +35,10 @@ public class PaymentsService {
         }else{
             throw new UserException("mid does not belong to merchant or cid does not belong to customer");
         }
+    }
 
+    public List<Transaction> getTransactions() {
+        return tRepo.getAll();
     }
 
 }

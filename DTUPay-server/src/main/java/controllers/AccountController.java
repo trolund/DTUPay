@@ -11,7 +11,6 @@ import java.util.List;
 @Path("/account")
 public class AccountController {
 
-
     AccountService service = new AccountService();
 
     @GET

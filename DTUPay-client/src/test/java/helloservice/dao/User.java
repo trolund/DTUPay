@@ -1,4 +1,4 @@
-package dao;
+package helloservice.dao;
 
 public class User {
 
