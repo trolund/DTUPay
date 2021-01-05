@@ -5,6 +5,8 @@ import dao.Transaction;
 import dao.User;
 import repositories.Interfaces.BasicRepository;
 
+import java.util.Comparator;
+
 public class TransactionRepository implements BasicRepository<Transaction, Integer> {
 
     public Transaction get(Integer id) {
@@ -19,7 +21,10 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
     public void add(Transaction a){
         Data d = Data.getInstance();
 
-        d.transactions.add(a);
+        Transaction toAdd = a;
+        toAdd.setId(nextId());
+
+        d.transactions.add(toAdd);
     }
 
     public void delete(Integer id){
@@ -33,6 +38,12 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
 
         delete(id);
         add(t);
+    }
+
+    private int nextId(){
+        Data d = Data.getInstance();
+        int nextID = d.transactions.stream().max(Comparator.comparingInt(Transaction::getId)).get().getId() + 1;
+        return nextID;
     }
 
 }

@@ -12,6 +12,15 @@ public class Transaction {
     public String description;
     public Date time;
 
+    public Transaction(int amount, int balance, String creditor, String debtor, String description, Date time) {
+        this.amount = amount;
+        this.balance = balance;
+        this.creditor = creditor;
+        this.debtor = debtor;
+        this.description = description;
+        this.time = time;
+    }
+
     public Transaction(int id, int amount, int balance, String creditor, String debtor, String description, Date time) {
         this.id = id;
         this.amount = amount;

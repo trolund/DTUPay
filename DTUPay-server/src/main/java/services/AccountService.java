@@ -5,6 +5,7 @@ import repositories.AccountRepository;
 import repositories.Data;
 
 import javax.ws.rs.NotFoundException;
+import java.util.List;
 
 public class AccountService {
 
@@ -18,6 +19,10 @@ public class AccountService {
         }
 
         throw new NotFoundException();
+    }
+
+    public List<Account> getByCpr(String cpr) {
+        return repo.getByCpr(cpr);
     }
 
     public void add(Account a){

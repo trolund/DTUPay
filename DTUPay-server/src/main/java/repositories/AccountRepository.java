@@ -3,15 +3,25 @@ package repositories;
 import dao.Account;
 import repositories.Interfaces.BasicRepository;
 
+import javax.ws.rs.NotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class AccountRepository implements BasicRepository<Account, Integer> {
 
     public Account get(Integer id) {
         Data d = Data.getInstance();
 
-        return d.accounts.stream()
+        Account a = d.accounts.stream()
                 .filter(account -> account.getId() == id)
                 .findAny()
                 .orElse(null);
+
+        if (a != null){
+            return a;
+        }
+
+        throw new NotFoundException("Account not found");
     }
 
     public void add(Account a){
@@ -20,10 +30,29 @@ public class AccountRepository implements BasicRepository<Account, Integer> {
         d.accounts.add(a);
     }
 
+    public List<Account> getByCpr(String cpr) {
+        Data d = Data.getInstance();
+
+        List<Account> a = d.accounts.stream()
+                .filter(account -> account.getUserId().equals(cpr)).collect(Collectors.toList());
+
+        if (a != null){
+            return a;
+        }
+
+        throw new NotFoundException("Account not found");
+    }
+
     public void delete(Integer id){
         Data d = Data.getInstance();
 
-        d.accounts.remove(get(id));
+        Account a = get(id);
+
+        if(a != null){
+            d.accounts.remove(a);
+        }
+
+        throw new NotFoundException("Account not found");
     }
 
     public void update(Account a){
