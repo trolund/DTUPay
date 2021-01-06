@@ -5,8 +5,6 @@ import dao.*;
 import repositories.AccountRepository;
 import repositories.TransactionRepository;
 import repositories.UserRepository;
-
-import javax.ws.rs.QueryParam;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +15,12 @@ public class PaymentsService {
     UserRepository uRepo = new UserRepository();
 
     public void createTransaction(int mid, int cid, int amount) throws UserException {
-        Account m = aRepo.get(mid);
-        Account c = aRepo.get(cid);
 
         User merchant = uRepo.get(mid);
         User customer = uRepo.get(cid);
+
+        Account m = aRepo.get(mid);
+        Account c = aRepo.get(cid);
 
         if(merchant instanceof Merchant && customer instanceof Customer){
             c.setBalance(c.getBalance() - amount);
@@ -29,11 +28,15 @@ public class PaymentsService {
             tRepo.add(new Transaction(amount,
                                     m.getBalance(),
                                     m.getUserId(),
-                                    m.getUserId(),
+                                    c.getUserId(),
                           "Transaction",
                                     new Date()));
         }else{
-            throw new UserException("mid does not belong to merchant or cid does not belong to customer");
+            if(merchant instanceof Merchant){
+                throw new UserException("customer with id " + cid + " is unknown");
+            }else {
+                throw new UserException("merchant with id " + mid + " is unknown");
+            }
         }
     }
 

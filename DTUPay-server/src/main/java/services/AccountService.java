@@ -14,11 +14,7 @@ public class AccountService {
     public Account get(Integer id) {
         Account a = repo.get(id);
 
-        if(a != null){
-            return a;
-        }
-
-        throw new NotFoundException();
+        return a;
     }
 
     public List<Account> getByCpr(String cpr) {

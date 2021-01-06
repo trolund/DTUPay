@@ -17,11 +17,7 @@ public class AccountRepository implements BasicRepository<Account, Integer> {
                 .findAny()
                 .orElse(null);
 
-        if (a != null){
-            return a;
-        }
-
-        throw new NotFoundException("Account not found");
+        return a;
     }
 
     public void add(Account a){

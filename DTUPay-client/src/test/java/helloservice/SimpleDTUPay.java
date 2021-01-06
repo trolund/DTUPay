@@ -1,6 +1,8 @@
 package helloservice;
 
 import helloservice.dao.Transaction;
+import helloservice.dto.ErrorType;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -17,12 +19,18 @@ public class SimpleDTUPay {
         baseUrl = client.target("http://localhost:8080/");
     }
 
-    public boolean pay(int amount, int cid, int mid) {
+    public String pay(int amount, int cid, int mid) {
         Response r = baseUrl.path("payments").queryParam("cid", cid)
                                 .queryParam("mid", mid)
                                 .queryParam("amount", amount)
                                 .request().post(null);
-        return r.getStatus() == 200;
+
+        if(r.getStatus() == 200) {
+            return null;
+        }else {
+            return r.readEntity(new GenericType<ErrorType>() {}).errorMessage;
+        }
+
     }
 
     public List<Transaction> getTransactionList() {
