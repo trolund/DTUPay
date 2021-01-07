@@ -1,10 +1,13 @@
-/*
-package dao;
+package models;
 
-public class Merchant extends User{
+import java.io.Serializable;
 
-    public Merchant(int userId, String cprNumber, String firstName, String lastName) {
-        super(userId, cprNumber, firstName, lastName);
+public class Merchant extends PayUser  {
+
+    public Merchant() {
+    }
+
+    public Merchant(String id, String cpr, String firstName, String lastName, int balance) {
+        super(id, cpr, firstName, lastName, balance);
     }
 }
-*/

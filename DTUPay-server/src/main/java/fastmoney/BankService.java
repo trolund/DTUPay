@@ -1,5 +1,5 @@
 
-package services.fastmoney;
+package fastmoney;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,13 +29,13 @@ public interface BankService {
      * 
      * @param accountId
      * @return
-     *     returns services.fastmoney.Account
+     *     returns fastmoney.Account
      * @throws BankServiceException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAccount", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.GetAccount")
-    @ResponseWrapper(localName = "getAccountResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.GetAccountResponse")
+    @RequestWrapper(localName = "getAccount", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.GetAccount")
+    @ResponseWrapper(localName = "getAccountResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.GetAccountResponse")
     public Account getAccount(
         @WebParam(name = "account_id", targetNamespace = "")
         String accountId)
@@ -46,13 +46,13 @@ public interface BankService {
      * 
      * @param cpr
      * @return
-     *     returns services.fastmoney.Account
+     *     returns fastmoney.Account
      * @throws BankServiceException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAccountByCprNumber", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.GetAccountByCprNumber")
-    @ResponseWrapper(localName = "getAccountByCprNumberResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.GetAccountByCprNumberResponse")
+    @RequestWrapper(localName = "getAccountByCprNumber", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.GetAccountByCprNumber")
+    @ResponseWrapper(localName = "getAccountByCprNumberResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.GetAccountByCprNumberResponse")
     public Account getAccountByCprNumber(
         @WebParam(name = "cpr", targetNamespace = "")
         String cpr)
@@ -69,8 +69,8 @@ public interface BankService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "createAccountWithBalance", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.CreateAccountWithBalance")
-    @ResponseWrapper(localName = "createAccountWithBalanceResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.CreateAccountWithBalanceResponse")
+    @RequestWrapper(localName = "createAccountWithBalance", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.CreateAccountWithBalance")
+    @ResponseWrapper(localName = "createAccountWithBalanceResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.CreateAccountWithBalanceResponse")
     public String createAccountWithBalance(
         @WebParam(name = "user", targetNamespace = "")
         User user,
@@ -85,8 +85,8 @@ public interface BankService {
      * @throws BankServiceException_Exception
      */
     @WebMethod
-    @RequestWrapper(localName = "retireAccount", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.RetireAccount")
-    @ResponseWrapper(localName = "retireAccountResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.RetireAccountResponse")
+    @RequestWrapper(localName = "retireAccount", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.RetireAccount")
+    @ResponseWrapper(localName = "retireAccountResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.RetireAccountResponse")
     public void retireAccount(
         @WebParam(name = "account_id", targetNamespace = "")
         String accountId)
@@ -96,32 +96,32 @@ public interface BankService {
     /**
      * 
      * @return
-     *     returns java.util.List<services.fastmoney.AccountInfo>
+     *     returns java.util.List<fastmoney.AccountInfo>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAccounts", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.GetAccounts")
-    @ResponseWrapper(localName = "getAccountsResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.GetAccountsResponse")
+    @RequestWrapper(localName = "getAccounts", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.GetAccounts")
+    @ResponseWrapper(localName = "getAccountsResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.GetAccountsResponse")
     public List<AccountInfo> getAccounts();
 
     /**
      * 
-     * @param debtor
-     * @param creditor
      * @param amount
+     * @param debtor
      * @param description
+     * @param creditor
      * @throws BankServiceException_Exception
      */
     @WebMethod
-    @RequestWrapper(localName = "transferMoneyFromTo", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.TransferMoneyFromTo")
-    @ResponseWrapper(localName = "transferMoneyFromToResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "services.fastmoney.TransferMoneyFromToResponse")
+    @RequestWrapper(localName = "transferMoneyFromTo", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.TransferMoneyFromTo")
+    @ResponseWrapper(localName = "transferMoneyFromToResponse", targetNamespace = "http://fastmoney.ws.dtu/", className = "fastmoney.TransferMoneyFromToResponse")
     public void transferMoneyFromTo(
         @WebParam(name = "debtor", targetNamespace = "")
         String debtor,
         @WebParam(name = "creditor", targetNamespace = "")
         String creditor,
         @WebParam(name = "amount", targetNamespace = "")
-                int amount,
+        BigDecimal amount,
         @WebParam(name = "description", targetNamespace = "")
         String description)
         throws BankServiceException_Exception

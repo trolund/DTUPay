@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class UserException extends Exception {
 
@@ -10,3 +10,4 @@ public class UserException extends Exception {
         super(message, cause);
     }
 }
+

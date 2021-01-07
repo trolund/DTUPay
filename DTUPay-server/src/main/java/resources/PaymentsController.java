@@ -1,7 +1,6 @@
-package controllers;
+package resources;
 
-import dto.ErrorType;
-import dtu.ws.fastmoney.Account;
+import viewModels.ErrorType;
 import services.PaymentsService;
 
 import javax.inject.Inject;

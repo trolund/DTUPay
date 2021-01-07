@@ -5,13 +5,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleDTUPaySteps {
-    int cid, mid;
+    String cid, mid;
     int amount;
     SimpleDTUPay dtuPay = new SimpleDTUPay();
     boolean successful;
@@ -19,11 +18,11 @@ public class SimpleDTUPaySteps {
     String errorMsg;
 
     @Given("a customer with id {int}")
-    public void aCustomerWithId(int cid) {
+    public void aCustomerWithId(String cid) {
         this.cid = cid;
     }
     @Given("a merchant with id {int}")
-    public void aMerchantWithId(int mid) {
+    public void aMerchantWithId(String mid) {
         this.mid = mid;
     }
     @When("the merchant initiates a payment for {int} kr by the customer")
@@ -42,8 +41,8 @@ public class SimpleDTUPaySteps {
         assertTrue(successful);
     }
 
-    @Given("a successful payment of {int} kr from customer {int} to merchant {int}")
-    public void givenTrans(int amount, int cid, int mid) {
+    @Given("a successful payment of {int} kr from customer {string} to merchant {string}")
+    public void givenTrans(int amount, String cid, String mid) {
         this.cid = cid;
         this.mid = mid;
         this.amount = amount;
@@ -51,7 +50,7 @@ public class SimpleDTUPaySteps {
 
     @When("the manager asks for a list of transactions")
     public void asksForTransactionList() {
-        this.transactions = dtuPay.getTransactionList();
+        this.transactions = dtuPay.getTransactionList(this.cid);
     }
 
     @Then("the list contains a transaction where customer {int} paid {int} kr to merchant {int}")

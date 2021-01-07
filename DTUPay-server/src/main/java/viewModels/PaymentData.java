@@ -1,4 +1,4 @@
-package dto;
+package viewModels;
 
 import java.io.Serializable;
 

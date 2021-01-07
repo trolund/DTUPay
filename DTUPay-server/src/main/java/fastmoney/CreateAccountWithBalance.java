@@ -1,5 +1,5 @@
 
-package services.fastmoney;
+package fastmoney;
 
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;

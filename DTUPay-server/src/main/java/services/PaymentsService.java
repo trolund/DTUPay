@@ -1,47 +1,64 @@
 package services;
 
-import Exceptions.UserException;
-import dao.*;
-import repositories.AccountRepository;
-import repositories.TransactionRepository;
-import repositories.UserRepository;
-import java.util.Date;
+import exceptions.TransactionException;
+import exceptions.UserException;
+import fastmoney.Account;
+import fastmoney.BankService;
+import fastmoney.BankServiceService;
+import fastmoney.Transaction;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.NotFoundException;
+import java.math.BigDecimal;
 import java.util.List;
 
+@ApplicationScoped
 public class PaymentsService {
 
-    TransactionRepository tRepo = new TransactionRepository();
-    AccountRepository aRepo = new AccountRepository();
-    UserRepository uRepo = new UserRepository();
+  //  TransactionRepository tRepo = new TransactionRepository();
+/*    AccountRepository aRepo = new AccountRepository();
+    UserRepository uRepo = new UserRepository();*/
+    BankService bs = new BankServiceService().getBankServicePort();
 
-    public void createTransaction(int mid, int cid, int amount) throws UserException {
+    public void createTransaction(String mid, String cid, int amount) throws UserException, TransactionException {
 
-        User merchant = uRepo.get(mid);
-        User customer = uRepo.get(cid);
+        try{
+            Account m = bs.getAccount(mid);
+            Account c = bs.getAccount(cid);
 
-        Account m = aRepo.get(mid);
-        Account c = aRepo.get(cid);
-
-        if(merchant instanceof Merchant && customer instanceof Customer){
-            c.setBalance(c.getBalance() - amount);
-            m.setBalance(m.getBalance() + amount);
-            tRepo.add(new Transaction(amount,
-                                    m.getBalance(),
-                                    m.getUserId(),
-                                    c.getUserId(),
-                          "Transaction",
-                                    new Date()));
-        }else{
-            if(merchant instanceof Merchant){
+            if(c == null){
                 throw new UserException("customer with id " + cid + " is unknown");
-            }else {
+            }
+            if(m == null) {
                 throw new UserException("merchant with id " + mid + " is unknown");
             }
+
+            bs.transferMoneyFromTo(
+                    m.getId(),
+                    c.getId(),
+                    BigDecimal.valueOf(amount),
+                    "Transaction");
+
+            Transaction t = new Transaction();
+            t.setBalance(c.getBalance());
+            t.setAmount(BigDecimal.valueOf(amount));
+            t.setDebtor(c.getId());
+            t.setCreditor(m.getId());
+            t.setDescription("Transaction from " + c.getId() + " to " + m.getId());
+
+        }catch (Exception e) {
+                throw new TransactionException("Transaction was not completed. " + e.getMessage(), e);
         }
+
     }
 
-    public List<Transaction> getTransactions() {
-        return tRepo.getAll();
+    public List<Transaction> getTransactions(String cpr) {
+        try {
+            return bs.getAccountByCprNumber(cpr).getTransactions();
+        }catch (Exception e){
+            throw new NotFoundException("Account not found");
+        }
+
     }
 
 }

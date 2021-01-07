@@ -1,21 +1,19 @@
+/*
 package repositories;
 
-import dao.Account;
-import dao.Transaction;
-import dao.User;
+import fastmoney.Transaction;
 import repositories.Interfaces.BasicRepository;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class TransactionRepository implements BasicRepository<Transaction, Integer> {
 
-    public Transaction get(Integer id) {
+    public Transaction get(String id) {
         Data d = Data.getInstance();
 
         return d.transactions.stream()
-                .filter(t -> t.getId() == id)
+               // .filter(t -> t.getTime() == id)
                 .findAny()
                 .orElse(null);
     }
@@ -27,11 +25,7 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
 
     public void add(Transaction a){
         Data d = Data.getInstance();
-
-        Transaction toAdd = a;
-        toAdd.setId(nextId());
-
-        d.transactions.add(toAdd);
+        d.transactions.add(a);
     }
 
     public void delete(Integer id){
@@ -41,7 +35,7 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
     }
 
     public void update(Transaction t){
-        int id = t.getId();
+        int id = t.getTime();
 
         delete(id);
         add(t);
@@ -60,3 +54,4 @@ public class TransactionRepository implements BasicRepository<Transaction, Integ
     }
 
 }
+*/

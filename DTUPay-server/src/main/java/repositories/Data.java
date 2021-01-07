@@ -1,22 +1,39 @@
 package repositories;
 
-import dao.*;
+import fastmoney.BankServiceException_Exception;
+import fastmoney.User;
+import models.Customer;
+import models.Merchant;
+import models.PayUser;
+import services.AccountService;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class Data {
 
-    public List<User> users;
-    public List<Transaction> transactions;
-    public List<Account> accounts;
+    private List<PayUser> users;
+
+    @Inject
+    AccountService as = new AccountService();
+
+    public List<PayUser> getUsers() {
+        return users;
+    }
 
     private static Data single_instance = null;
 
-    // private constructor restricted to this class itself
     private Data()
     {
         setData();
+        try {
+            createAccunts();
+        } catch (BankServiceException_Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // static method to create instance of Singleton class
@@ -31,23 +48,32 @@ public class Data {
     private void setData() {
         users = new ArrayList<>();
 
-        User u1 = new Customer(0,"061094xxxx", "Troels", "Lund");
-        User u2 = new Customer(1,"061095xxxx", "Emil", "Lund");
-        User u3 = new Merchant(2,"0610980xxxx", "Erik", "Lund");
+        // String id, String cpr, String firstName, String lastName, int balance
+
+        Customer u1 = new Customer("c1","061094xxxx", "Troels", "Lund", 200);
+        Customer u2 = new Customer("c2","061095xxxx", "Emil", "Lund", 200);
+        Merchant u3 = new Merchant("m1","0610980xxxx", "Erik", "Lund", 200);
 
         users.add(u1);
         users.add(u2);
         users.add(u3);
+    }
 
-        accounts = new ArrayList<>();
+    private void createAccunts() throws BankServiceException_Exception {
+        for (PayUser c: users) {
+            makeAccount(c.getCpr(), c.getFirstName(), c.getLastName(), c.getBalance());
+        }
+    }
 
-        accounts.add(new Account(0, 200, u1.cprNumber));
-        accounts.add(new Account(1, 250, u2.cprNumber));
-        accounts.add(new Account(2, 2000, u2.cprNumber));
-        accounts.add(new Account(3, 400, u3.cprNumber));
-        accounts.add(new Account(4, 100, u3.cprNumber));
+    private void makeAccount(String cpr, String firstName, String lastName, int balance) throws BankServiceException_Exception {
+        if(!as.accountExits(cpr)){
+            User u = new User();
+            u.setCprNumber(cpr);
+            u.setFirstName(firstName);
+            u.setLastName(lastName);
 
-        transactions = new ArrayList<>();
+            as.add(u, balance);
+        }
     }
 
 }

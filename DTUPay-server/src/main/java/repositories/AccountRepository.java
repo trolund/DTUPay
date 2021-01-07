@@ -1,6 +1,7 @@
+/*
 package repositories;
 
-import dao.Account;
+import fastmoney.Account;
 import repositories.Interfaces.BasicRepository;
 
 import javax.ws.rs.NotFoundException;
@@ -12,10 +13,12 @@ public class AccountRepository implements BasicRepository<Account, Integer> {
     public Account get(Integer id) {
         Data d = Data.getInstance();
 
-        Account a = d.accounts.stream()
+       */
+/* Account a = d.accounts.stream()
                 .filter(account -> account.getId() == id)
                 .findAny()
-                .orElse(null);
+                .orElse(null);*//*
+
 
         return a;
     }
@@ -59,3 +62,4 @@ public class AccountRepository implements BasicRepository<Account, Integer> {
     }
 
 }
+*/

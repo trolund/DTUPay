@@ -1,5 +1,5 @@
 
-package services.fastmoney;
+package fastmoney;
 
 import javax.xml.ws.WebFault;
 
@@ -45,7 +45,7 @@ public class BankServiceException_Exception
     /**
      * 
      * @return
-     *     returns fault bean: services.fastmoney.BankServiceException
+     *     returns fault bean: fastmoney.BankServiceException
      */
     public BankServiceException getFaultInfo() {
         return faultInfo;

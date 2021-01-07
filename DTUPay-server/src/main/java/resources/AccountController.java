@@ -1,11 +1,10 @@
-package controllers;
+package resources;
 
-import dtu.ws.fastmoney.Account;
-import dtu.ws.fastmoney.BankServiceException_Exception;
-import dtu.ws.fastmoney.User;
-import org.jboss.resteasy.annotations.Body;
+import fastmoney.BankServiceException_Exception;
+import fastmoney.User;
 import services.AccountService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,11 +12,18 @@ import javax.ws.rs.core.Response;
 @Path("/account")
 public class AccountController {
 
-    AccountService service = new AccountService();
+    @Inject
+    AccountService service;
+
+    @GET
+    @Produces("application/json")
+    public Response getAll() {
+        return Response.ok().entity(service.all()).build();
+    }
 
     @POST
     @Consumes("application/json")
-    public Response CreateAccounts(User user, @QueryParam("balance") int balance) {
+    public Response createAccounts(User user, @QueryParam("balance") int balance) {
         try {
             service.add(user, balance);
             return Response.ok().build();

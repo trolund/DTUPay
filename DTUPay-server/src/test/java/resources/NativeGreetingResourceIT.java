@@ -1,4 +1,4 @@
-package controllers;
+package resources;
 
 import io.quarkus.test.junit.NativeImageTest;
 

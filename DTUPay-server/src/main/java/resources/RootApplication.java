@@ -1,4 +1,4 @@
-package controllers;
+package resources;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -6,11 +6,9 @@ import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.info.License;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import java.util.logging.Logger;
 

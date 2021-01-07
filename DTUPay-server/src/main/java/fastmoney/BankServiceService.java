@@ -1,5 +1,5 @@
 
-package services.fastmoney;
+package fastmoney;
 
 import java.net.MalformedURLException;
 import java.net.URL;

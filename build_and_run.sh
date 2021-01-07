@@ -2,6 +2,8 @@
 set -e
 
 pushd DTUPay-server
+mvn clean
+mvn compile
 mvn package -Dquarkus.package.type=uber-jar
 
 # Start the server in the background so that the
@@ -17,13 +19,13 @@ server_pid=$!
 
 # Install a hook that on err or on normal exit of this script,
 # the server is killed, so that we can run the script again
-trap 'kill $server_pid' err exit
+# trap 'kill $server_pid' err exit
 
-popd
+# popd
 
 # Give the Web server a chance to finish start up
-sleep 2s 
+# sleep 2s 
 
-pushd DTUPay-client
-mvn test
-popd
+#pushd DTUPay-client
+#mvn test
+#popd

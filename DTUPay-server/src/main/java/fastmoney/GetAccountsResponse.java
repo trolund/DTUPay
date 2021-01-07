@@ -1,5 +1,5 @@
 
-package services.fastmoney;
+package fastmoney;
 
 import java.util.ArrayList;
 import java.util.List;

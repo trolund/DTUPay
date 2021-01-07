@@ -19,7 +19,7 @@ public class SimpleDTUPay {
         baseUrl = client.target("http://localhost:8080/");
     }
 
-    public String pay(int amount, int cid, int mid) {
+    public String pay(int amount, String cid, String mid) {
         Response r = baseUrl.path("payments").queryParam("cid", cid)
                                 .queryParam("mid", mid)
                                 .queryParam("amount", amount)
@@ -33,9 +33,8 @@ public class SimpleDTUPay {
 
     }
 
-    public List<Transaction> getTransactionList() {
-        Response r = baseUrl.path("payments/transactions").request().get();
-
+    public List<Transaction> getTransactionList(String accountId) {
+        Response r = baseUrl.path("payments/transactions/" + accountId).request().get();
         return r.readEntity(new GenericType<List<Transaction>>() {});
     }
 }
