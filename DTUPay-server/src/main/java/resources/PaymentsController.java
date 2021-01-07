@@ -1,28 +1,31 @@
 package controllers;
 
-import dao.Transaction;
 import dto.ErrorType;
+import dtu.ws.fastmoney.Account;
 import services.PaymentsService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import java.util.logging.Logger;
 
 @Path("/payments")
 public class PaymentsController {
 
-    PaymentsService service = new PaymentsService();
+    @Inject
+    PaymentsService ps;
+
+    private final static Logger LOGGER = Logger.getLogger(PaymentsController.class.getName());
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response CreateTransaction(@QueryParam("mid") int mid,
-                                      @QueryParam("cid") int cid,
+    public Response CreateTransaction(@QueryParam("mid") String mid,
+                                      @QueryParam("cid") String cid,
                                       @QueryParam("amount") int amount) {
         try {
-            service.createTransaction(mid, cid, amount);
+            ps.createTransaction(mid, cid, amount);
+
             return Response
                     .status(Response.Status.OK)
                     .build();
@@ -35,13 +38,13 @@ public class PaymentsController {
     }
 
     @GET
-    @Path("/transactions")
+    @Path("/transactions/{cpr}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTransactions() {
+    public Response getTransactions(@PathParam("cpr") String cpr) {
         try {
             return Response
                     .status(Response.Status.OK)
-                    .entity(service.getTransactions())
+                    .entity(ps.getTransactions(cpr))
                     .build();
         } catch (Exception e){
             return Response

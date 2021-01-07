@@ -1,3 +1,4 @@
+/*
 package dao;
 
 public class Merchant extends User{
@@ -6,3 +7,4 @@ public class Merchant extends User{
         super(userId, cprNumber, firstName, lastName);
     }
 }
+*/
