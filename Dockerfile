@@ -4,7 +4,7 @@ COPY ./DTUPay-server/target/DTUPay-server-1.0.0-SNAPSHOT-runner.jar /usr/src
 
 COPY ./DTUPay-server/target/lib /usr/src/lib
 
-EXPOSE 8080
+EXPOSE 1617
 
 WORKDIR /usr/src
 
