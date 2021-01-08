@@ -7,7 +7,7 @@ mvn package
 
 popd
 
-docker-compose up
+docker-compose up -d
 
 # Start the server in the background so that the
 # shell script is not blocked and can execute the tests
